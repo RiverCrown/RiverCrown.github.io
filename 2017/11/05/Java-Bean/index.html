@@ -135,7 +135,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/11/05/Java-Bean/index.html">
 <meta property="og:site_name" content="Celeste">
 <meta property="og:description" content="在做CRM课设的时候碰到的知识点。">
-<meta property="og:updated_time" content="2018-04-27T02:33:32.221Z">
+<meta property="og:updated_time" content="2018-04-27T07:52:51.096Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java Bean">
 <meta name="twitter:description" content="在做CRM课设的时候碰到的知识点。">
@@ -235,6 +235,16 @@
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
           </a>
         </li>
       
@@ -350,9 +360,8 @@
       
         <p><center>在做CRM课设的时候碰到的知识点。</center><br><a id="more"></a></p>
 <p>我是在看JavaWeb的书籍中了解到JavaBean这个概念的。书中解释JavaBean是为了提高Jsp文件中的代码可读性（即避免Jsp页面中写太多Java代码），JavaBean在Jsp中的代码表现为标签化即：</p>
-<pre><code>&lt;% %&gt;
-&lt;jsp:useBean&gt;
-</code></pre><p>然而百度出来的JavaBean却和我理解的概念相去甚远，JavaBean原来是一个更大更广的概念。</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;% %&gt;</div><div class="line">&lt;jsp:useBean&gt;</div></pre></td></tr></table></figure>
+<p>然而百度出来的JavaBean却和我理解的概念相去甚远，JavaBean原来是一个更大更广的概念。</p>
 <blockquote>
 <p>JavaBean是一种JAVA语言写成的可重用组件。为写成JavaBean，类必须是具体的和公共的，并且具有无参数的构造器。JavaBeans 通过提供符合一致性设计模式的公共方法将内部域暴露成为属性。<br><strong>——百度百科</strong></p>
 </blockquote>
@@ -372,8 +381,8 @@
 </blockquote>
 <p>这段话大概解释了JavaBean的设计理念。</p>
 <p>所以我在书上看到的Jsp中关于JavaBean的应用的代码如：</p>
-<pre><code>&lt;% %&gt;
-</code></pre><p>的作用只是解析了Java代码，如果解析的不是符合JavaBean规范的代码，其实这种用法也谈不上对JavaBean的应用。</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;% %&gt;</div></pre></td></tr></table></figure>
+<p>的作用只是解析了Java代码，如果解析的不是符合JavaBean规范的代码，其实这种用法也谈不上对JavaBean的应用。</p>
 
       
     </div>
