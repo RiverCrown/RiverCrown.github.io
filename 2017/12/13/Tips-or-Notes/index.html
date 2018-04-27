@@ -127,6 +127,9 @@
 
 
 
+  <meta property="fb:admins" content="" />
+  <meta property="fb:app_id" content="" />
+
 
 
 <meta name="description" content="在做CRM课设的时候碰到的坑和知识点。">
@@ -135,7 +138,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/12/13/Tips-or-Notes/index.html">
 <meta property="og:site_name" content="Celeste">
 <meta property="og:description" content="在做CRM课设的时候碰到的坑和知识点。">
-<meta property="og:updated_time" content="2018-04-27T02:58:37.363Z">
+<meta property="og:updated_time" content="2018-04-27T07:12:52.605Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Tips or Notes">
 <meta name="twitter:description" content="在做CRM课设的时候碰到的坑和知识点。">
@@ -176,6 +179,24 @@
 
   <title>Tips or Notes | Celeste</title>
   
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '',
+      xfbml      : true,
+      version    : 'v2.10'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/zh_Hans/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+
 
 
 
@@ -324,6 +345,16 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/12/13/Tips-or-Notes/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count fb-comments-count" data-href="http://yoursite.com/2017/12/13/Tips-or-Notes/" itemprop="commentCount">0</span> comments
+                </a>
+              </span>
+            
           
 
           
@@ -349,7 +380,7 @@
 
       
         <p><center>在做CRM课设的时候碰到的坑和知识点。</center><br><a id="more"></a></p>
-<h1 id="Java-Web-相关："><a href="#Java-Web-相关：" class="headerlink" title="Java Web 相关："></a>Java Web 相关：</h1><h2 id="Spring-框架相关："><a href="#Spring-框架相关：" class="headerlink" title="Spring 框架相关："></a>Spring 框架相关：</h2><ul>
+<h2 id="Java-Web-相关："><a href="#Java-Web-相关：" class="headerlink" title="Java Web 相关："></a>Java Web 相关：</h2><h3 id="Spring-框架相关："><a href="#Spring-框架相关：" class="headerlink" title="Spring 框架相关："></a>Spring 框架相关：</h3><ul>
 <li><p>Struts2中的action功能相当于一个servlet，只是使用起来比servlet灵活。在struts.xml配置中，有package的概念，一个package中可以存放多个action元素。<strong>问题在于：</strong> 这种方法调用一个action和调用一个类似乎没有太大的区别，那么这种设计是为了什么呢？</p>
 </li>
 <li><p>Action相当于MVC中的控制层</p>
@@ -393,7 +424,7 @@
 <p>在取出这个Staff实体类的同时，会取出与这个Staff相关联的route的信息，但实际上并不是每次取出Staff类都会用到route类的，因此就会给数据库造成负担。  </p>
 </li>
 </ul>
-<h2 id="JS-前端相关："><a href="#JS-前端相关：" class="headerlink" title="JS 前端相关："></a>JS 前端相关：</h2><ul>
+<h3 id="JS-前端相关："><a href="#JS-前端相关：" class="headerlink" title="JS 前端相关："></a>JS 前端相关：</h3><ul>
 <li><p>ajax传递的data数据在SpringMVC中可以被封装成一个对象,这个思路可以参考 <a href="https://www.cnblogs.com/DylanZ/p/5822308.html" target="_blank" rel="external">jquery传递对象参数到Spring Controller</a> 这篇文章。  </p>
 <p>在参照这篇文章的时候，ajax传递data时会产生： <strong><em>Failed to load resource: the server responded with a status of 400</em></strong> 这个错误，一开始以为url写错了，后来发现不是404错误而是400，百度的结果是：<strong>表单提交的内容数据类型与实体的（也就是数据表字段）的数据类型不匹配导致的。</strong>  </p>
 <p>我根据这个提示修改了data中的数据类型，但还是出现这个问题，jquery的ajax代码如下：  </p>
@@ -422,7 +453,7 @@ table.api().ajax.url(<span class="string">''</span>).load();
 <li><p>从后端传到前台的自定义类对象都会被js转换成json格式的数据。</p>
 </li>
 </ul>
-<h1 id="通用知识点："><a href="#通用知识点：" class="headerlink" title="通用知识点："></a>通用知识点：</h1><ul>
+<h2 id="通用知识点："><a href="#通用知识点：" class="headerlink" title="通用知识点："></a>通用知识点：</h2><ul>
 <li><p>字段和属性的区别：<br>最主要的区别是<strong>属性</strong>可以有get和set方法（get、set访问器），而<strong>字段</strong>只是类内部的一个类成员。  </p>
 </li>
 <li><p>句柄的大概解释<a href="https://www.zhihu.com/question/27656256" target="_blank" rel="external">知乎链接</a></p>
@@ -457,6 +488,24 @@ table.api().ajax.url(<span class="string">''</span>).load();
       
 
       
+      
+        <div class="post-widgets">
+        
+
+        
+          <div class="social-like">
+            
+
+            
+              <div class="fb_like">
+                <div class="fb-like" data-layout="button_count" data-share="true"></div>
+              </div>
+            
+          </div>
+        
+
+        
+        </div>
       
       
 
@@ -503,7 +552,12 @@ table.api().ajax.url(<span class="string">''</span>).load();
 
   
     <div class="comments" id="comments">
-      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjA2MS8xMjU5Ng=="></div>
+      <div class="fb-comments"
+           data-href="http://yoursite.com/2017/12/13/Tips-or-Notes/"
+           data-numposts="10"
+           data-width="100%"
+           data-colorscheme="light">
+      </div>
     </div>
 
   
@@ -604,7 +658,7 @@ table.api().ajax.url(<span class="string">''</span>).load();
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java-Web-相关："><span class="nav-number">1.</span> <span class="nav-text">Java Web 相关：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-框架相关："><span class="nav-number">1.1.</span> <span class="nav-text">Spring 框架相关：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JS-前端相关："><span class="nav-number">1.2.</span> <span class="nav-text">JS 前端相关：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#通用知识点："><span class="nav-number">2.</span> <span class="nav-text">通用知识点：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Java-Web-相关："><span class="nav-number">1.</span> <span class="nav-text">Java Web 相关：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring-框架相关："><span class="nav-number">1.1.</span> <span class="nav-text">Spring 框架相关：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JS-前端相关："><span class="nav-number">1.2.</span> <span class="nav-text">JS 前端相关：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通用知识点："><span class="nav-number">2.</span> <span class="nav-text">通用知识点：</span></a></li></ol></div>
             
 
           </div>
@@ -782,17 +836,6 @@ table.api().ajax.url(<span class="string">''</span>).load();
 
 
 
-  
-    <script type="text/javascript">
-      (function(d, s) {
-        var j, e = d.getElementsByTagName(s)[0];
-        if (typeof LivereTower === 'function') { return; }
-        j = d.createElement(s);
-        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-        j.async = true;
-        e.parentNode.insertBefore(j, e);
-      })(document, 'script');
-    </script>
   
 
 
