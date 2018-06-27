@@ -162,7 +162,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/06/25/验证码识别-image-based/result_3_1.png">
 <meta property="og:image" content="http://yoursite.com/2018/06/25/验证码识别-image-based/result_4_0.png">
 <meta property="og:image" content="http://yoursite.com/2018/06/25/验证码识别-image-based/result_4_1.png">
-<meta property="og:updated_time" content="2018-06-27T02:46:25.683Z">
+<meta property="og:updated_time" content="2018-06-27T23:41:56.740Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="验证码识别(image-based)">
 <meta name="twitter:description" content="服务外包竞赛的赛题，利用CNN来识别验证码。">
@@ -649,6 +649,7 @@
 </table>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在这篇文章中提到了五种难度依次递增的验证码类型，我们基于 VGGNet 的网络结构分别对其进行了神经网络模型的搭建。对于 <strong>变长和难度较大的验证码类型</strong> ，我们对其进行了前期的 <strong>分割</strong> 操作；对于较为简单的验证码类型，我们则采用了 <strong>端到端</strong> 的方式对其直接进行建模。通过模型在验证集和测试集上的准确率，我们可以看出端到端的模型不但避免了前期困难的预处理工作，且能训练出高准确率的识别模型。由此可见端到端的训练模式将是未来深度学习的一个重要方向。</p>
 <p>第五类验证码在使用单纯的分类学习时没有办法收敛，使用 <strong>triplet loss</strong> 进行相似度学习就可以得到较好的成效；这是因为第五类验证码具有差异性小和类别繁多的特点。</p>
+<p>代码托管在 <a href="https://github.com/RiverCrown/break-image-based-CAPTCHA" target="_blank" rel="noopener">我的github</a> 中。</p>
 
       
     </div>
