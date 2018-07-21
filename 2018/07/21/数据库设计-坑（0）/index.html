@@ -118,7 +118,7 @@
 
 
 
-  <meta name="keywords" content="Java Web," />
+  <meta name="keywords" content="DataBase," />
 
 
 
@@ -129,18 +129,18 @@
 
 
 
-<meta name="description" content="在做CRM课设的时候碰到的知识点。">
-<meta name="keywords" content="Java Web">
+<meta name="description" content="要点：  CHAR、VARCHAR、INT 数据类型 主键外键设计原则 冷热数据分离概念 长度过大字段的设计">
+<meta name="keywords" content="DataBase">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java Bean">
-<meta property="og:url" content="http://yoursite.com/2017/11/05/Java-Bean/index.html">
+<meta property="og:title" content="数据库设计--坑（0）">
+<meta property="og:url" content="http://yoursite.com/2018/07/21/数据库设计-坑（0）/index.html">
 <meta property="og:site_name" content="Celeste">
-<meta property="og:description" content="在做CRM课设的时候碰到的知识点。">
+<meta property="og:description" content="要点：  CHAR、VARCHAR、INT 数据类型 主键外键设计原则 冷热数据分离概念 长度过大字段的设计">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-27T07:52:51.096Z">
+<meta property="og:updated_time" content="2018-07-21T03:07:03.416Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java Bean">
-<meta name="twitter:description" content="在做CRM课设的时候碰到的知识点。">
+<meta name="twitter:title" content="数据库设计--坑（0）">
+<meta name="twitter:description" content="要点：  CHAR、VARCHAR、INT 数据类型 主键外键设计原则 冷热数据分离概念 长度过大字段的设计">
 
 
 
@@ -170,13 +170,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/11/05/Java-Bean/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/07/21/数据库设计-坑（0）/"/>
 
 
 
 
 
-  <title>Java Bean | Celeste</title>
+  <title>数据库设计--坑（0） | Celeste</title>
   
 
 
@@ -293,7 +293,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/05/Java-Bean/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/21/数据库设计-坑（0）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="River Crown">
@@ -310,7 +310,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Java Bean</h1>
+          <h1 class="post-title" itemprop="name headline">数据库设计--坑（0）</h1>
         
 
         <div class="post-meta">
@@ -322,8 +322,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-05T10:30:31+08:00">
-                2017-11-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-21T10:53:46+08:00">
+                2018-07-21
               </time>
             
 
@@ -360,33 +360,63 @@
       
 
       
-        <p><center>在做CRM课设的时候碰到的知识点。</center><br><a id="more"></a></p>
-<p>我是在看JavaWeb的书籍中了解到JavaBean这个概念的。书中解释JavaBean是为了提高Jsp文件中的代码可读性（即避免Jsp页面中写太多Java代码），JavaBean在Jsp中的代码表现为标签化即：</p>
-<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;% %&gt;</span><br><span class="line">&lt;jsp:useBean&gt;</span><br></pre></td></tr></table></figure>
-<p>然而百度出来的JavaBean却和我理解的概念相去甚远，JavaBean原来是一个更大更广的概念。</p>
-<blockquote>
-<p>JavaBean是一种JAVA语言写成的可重用组件。为写成JavaBean，类必须是具体的和公共的，并且具有无参数的构造器。JavaBeans 通过提供符合一致性设计模式的公共方法将内部域暴露成为属性。<br><strong>——百度百科</strong></p>
-</blockquote>
-<p>JavaBean最初是使代码可以复用而创建的，JavaBean开发了一些标准，使得代码在程序里可以方便的被重用，提升开发效率。<strong>JavaBean就是遵循一组规则的Java类，即：</strong></p>
-<blockquote>
+        <p>要点：</p>
 <ul>
-<li>所有属性为private</li>
-<li>提供默认构造方法  </li>
-<li>提供getter和setter  </li>
-<li>实现serializable接口<br><strong>——<a href="https://www.zhihu.com/question/19773379/answer/40724984" target="_blank" rel="noopener">JavaBean是个什么概念？ - exploit-cat的回答 - 知乎</a></strong></li>
+<li>CHAR、VARCHAR、INT 数据类型</li>
+<li>主键外键设计原则</li>
+<li>冷热数据分离概念</li>
+<li>长度过大字段的设计</li>
 </ul>
-</blockquote>
+<a id="more"></a>
+<h2 id="编码问题"><a href="#编码问题" class="headerlink" title="编码问题"></a>编码问题</h2><ul>
+<li><p>字符和字节的区别：1 个字符可以代表一个英文字母/汉字/数字，而 1 个汉字按照编码的不同可以是 2-3 个字节的（大部分英文字母和数字都是 1 个字节）。</p>
+</li>
+<li><p>UTF-8 是 Unicode 的实现方式之一，Unicode 只是一个字符集。</p>
+</li>
+<li><p><a href="https://blog.csdn.net/bluetjs/article/details/52936943" target="_blank" rel="noopener">UTF-8 编码存储问题</a></p>
+</li>
+</ul>
+<h2 id="MySQL-数据类型"><a href="#MySQL-数据类型" class="headerlink" title="MySQL 数据类型"></a>MySQL 数据类型</h2><ul>
+<li><p>CHAR(size)：</p>
+<p>  存储最大 <strong>字符</strong> 长度为 size 的字符串值（size 取值范围是 0-255），字段占用的 <strong>字符</strong> 数固定。</p>
+<p>  这里固定的意思是如果存储的字符串长度小于 size，那 CHAR <strong>会自动用空格补全存入数据库中</strong> （这里的空格不显示）。</p>
+</li>
+<li><p>VARCHAR(size)：</p>
+<p>  存储最大 <strong>字符</strong> 长度为 size 的字符串值（size 取值范围是 0-65535），字段占用的 <strong>字符</strong> 数根据实际值变化。</p>
+<p>  即如果存储的字符串长度小于 size，VARCHAR 并 <strong>不会像 CHAR 那样自动用空格补全字符串。</strong></p>
+</li>
+<li><p>INT(size)：</p>
+<p>  存储整数值，容易混淆的是 size 所代表的含义，这里的 size 是 <strong>指整数显示的宽度，而不是指整数可以存储的最大位数，实际上 INT(10) 和 INT(20) 能存储的数字范围是一样的。</strong> </p>
+<p>  如果设置了一个字段为 INT(5)，该字段依然能够存入一个 6 位数的值，且取出的时候也不会将其截断为 5 位；如果存入一个 3 位数的值并且 <strong>将字段设置为 ZeroFill</strong> ，那么显示该 3 位数值的时候会自动在数字前面补 0。</p>
+</li>
+</ul>
+<h2 id="设计指导方针"><a href="#设计指导方针" class="headerlink" title="设计指导方针"></a>设计指导方针</h2><ul>
+<li><p>CHAR 和 VARCHAR 的选择：</p>
 <blockquote>
-<p>Java语言欠缺属性、事件、多重继承功能。所以，如果要在Java程序中实现一些面向对象编程的常见需求，只能手写大量胶水代码。Java Bean正是编写这套胶水代码的惯用模式或约定。这些约定包括getXxx、setXxx、isXxx、addXxxListener、XxxEvent等。遵守上述约定的类可以用于若干工具或库。<strong>——<a href="https://www.zhihu.com/question/19773379/answer/31625054/" target="_blank" rel="noopener">JavaBean 是个什么概念？ - 杨博的回答 - 知乎</a></strong></p>
+<p>因为 CHAR 无论存储数据长度本身长度多少，都会占用固定的长度，因此存储空间占用会有一定的浪费，而 VARCHAR 由于是可变长度，这个问题就可以得到解决，但在性能上会受到一定的影响， <strong>对于长度基本变化不大，且要求查询速度的应用来讲，CHAR 会更加合适，而 VARCHAR 更节约存储空间。</strong></p>
 </blockquote>
-<p>这是知乎上面的一段解释，该回答中有一句话</p>
-<blockquote>
-<p>让用户一开始就使用getSize，以便有朝一日修改getSize实现时，不破坏向后兼容性。这种public int getSize() { return size; }的惯用手法，就是Java Bean。</p>
-</blockquote>
-<p>这段话大概解释了JavaBean的设计理念。</p>
-<p>所以我在书上看到的Jsp中关于JavaBean的应用的代码如：</p>
-<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;% %&gt;</span><br></pre></td></tr></table></figure>
-<p>的作用只是解析了Java代码，如果解析的不是符合JavaBean规范的代码，其实这种用法也谈不上对JavaBean的应用。</p>
+</li>
+<li><p>数据库提取最关键的信息，无关信息（即不需要我方处理的信息）可以直接存到一个 VARCHAR 或者 TEXT 中。需要注意的是为了避免 TEXT 或者过大的 VARCHAR 字段对表的查询性能造成影响，可以把 TEXT 字段重新组织成一张表，原表中只需要存储对应的 id 值即可。</p>
+</li>
+<li><p>数据冷热分离：</p>
+<p>  冷数据就是指查询频次较低的数据，热数据就是指查询频次较高的数据。</p>
+<p>  如果把冷热数据放在同一张表中，那么会导致单表数据量过大，严重影响查询性能，这个时候将冷数据备份到另一张表中可以保证原表的查询性能。</p>
+</li>
+<li><p>主键外键的设计原则：</p>
+<ol>
+<li><p>主键应该是一个无意义的自增 id，然后将业务上的“主键”设置为唯一索引。如果业务上（逻辑上）的“主键”是由多个字段组成的，那么可以建立 <strong>联合索引</strong> 。</p>
+</li>
+<li><p>不能使用外键和级联，所有的相关操作需要在应用层解决。</p>
+</li>
+<li><p><a href="https://blog.csdn.net/kleguan/article/details/74502330" target="_blank" rel="noopener">主键外键设计相关的博文</a></p>
+</li>
+</ol>
+</li>
+<li><p>字段能使用整型的地方就不用字符型。</p>
+</li>
+<li><p>大型文件（图片）一般都存储在一个独立的文件服务器中，不存在数据库中也不存在服务器本地的文件系统中，比如 CDN。</p>
+</li>
+</ul>
 
       
     </div>
@@ -404,7 +434,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Java-Web/" rel="tag"># Java Web</a>
+            <a href="/tags/DataBase/" rel="tag"># DataBase</a>
           
         </div>
       
@@ -417,8 +447,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/04/启程/" rel="next" title="启程">
-                <i class="fa fa-chevron-left"></i> 启程
+              <a href="/2018/07/02/《神界原罪2》小结/" rel="next" title="《神界原罪2》小结">
+                <i class="fa fa-chevron-left"></i> 《神界原罪2》小结
               </a>
             
           </div>
@@ -426,10 +456,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/12/05/Spring-注解/" rel="prev" title="Spring 注解">
-                Spring 注解 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -486,8 +512,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -542,6 +577,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#编码问题"><span class="nav-number">1.</span> <span class="nav-text">编码问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL-数据类型"><span class="nav-number">2.</span> <span class="nav-text">MySQL 数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设计指导方针"><span class="nav-number">3.</span> <span class="nav-text">设计指导方针</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
