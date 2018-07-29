@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lora:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lato:300,300italic,400,400italic,700,700italic|Lobster:300,300italic,400,400italic,700,700italic|Ubuntu Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/Celeste_logo.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/Celeste_logo.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/Celeste_logo.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/Celeste_logo.png?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,XML," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="要点：  POJO 对象和 XML 互相转换。  POJO 类和 XSD 互相转换。  主要介绍 JAXB 对简单 POJO 类（不含集合数组）的操作。">
+<meta name="keywords" content="Java,XML">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JAXB 简单使用">
+<meta property="og:url" content="http://yoursite.com/2018/07/28/JAXB-简单使用/index.html">
+<meta property="og:site_name" content="Celeste">
+<meta property="og:description" content="要点：  POJO 对象和 XML 互相转换。  POJO 类和 XSD 互相转换。  主要介绍 JAXB 对简单 POJO 类（不含集合数组）的操作。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/07/28/JAXB-简单使用/idea_maven_plugin_window.png">
+<meta property="og:image" content="http://yoursite.com/2018/07/28/JAXB-简单使用/idea_xml_uri_problem.png">
+<meta property="og:updated_time" content="2018-07-29T02:28:52.410Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JAXB 简单使用">
+<meta name="twitter:description" content="要点：  POJO 对象和 XML 互相转换。  POJO 类和 XSD 互相转换。  主要介绍 JAXB 对简单 POJO 类（不含集合数组）的操作。">
+<meta name="twitter:image" content="http://yoursite.com/2018/07/28/JAXB-简单使用/idea_maven_plugin_window.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/07/28/JAXB-简单使用/"/>
+
+
+
+
+
+  <title>JAXB 简单使用 | Celeste</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Celeste</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Leave out all the rest</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/28/JAXB-简单使用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="River Crown">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/iscream_normal.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Celeste">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">JAXB 简单使用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-28T16:44:50+08:00">
+                2018-07-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>要点：</p>
+<ul>
+<li><p>POJO 对象和 XML 互相转换。</p>
+</li>
+<li><p>POJO 类和 XSD 互相转换。</p>
+</li>
+<li><p>主要介绍 JAXB 对简单 POJO 类（不含集合数组）的操作。</p>
+</li>
+</ul>
+<a id="more"></a>
+<h2 id="XML-文件头"><a href="#XML-文件头" class="headerlink" title="XML 文件头"></a>XML 文件头</h2><p>XML 文件头的作用是说明 XML 标签的定义。常见的定义 XML 文档结构的文件有 DTD(Document Type Definition) 和 XSD(XML Schema Definition) 。</p>
+<p>本文主要讲解对象是 XSD，所以 DTD 就不做介绍了。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/POM/4.0.0"</span> <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>以上是 pom.xml 中的文件头部分，可以看到比较关键的配置信息有：xmlns，xmlns:xsi 和 xsi:schemaLocation。鉴于网络上 <a href="https://blog.csdn.net/yangyuge1987/article/details/59536964" target="_blank" rel="noopener">详解 XML 文件头的文章</a> 已经很齐全了，这里就只简单列举一下我对文件头的理解。</p>
+<ul>
+<li><p>xmlns:xsi</p>
+<p>  用 URL 指定了一个唯一的名称，在标签中使用 xsi 前缀就可以使用这个唯一的名称。</p>
+</li>
+<li><p>xmlns</p>
+<p>  默认的命名空间，指定了 xmlns 以后，可以省去在所有的 <strong>子元素</strong> 中使用前缀的工作。</p>
+</li>
+<li><p>xsi:schemaLocation</p>
+<p>  schemaLocation 是 xsi 命名空间内的一个 <strong>属性</strong> ，在这个特例下 xsi:schemaLocation 定义了 XML 命名空间和对应的 XSD 文档的位置的关系。</p>
+</li>
+</ul>
+<h2 id="POJO-对象和-XML-互相转换"><a href="#POJO-对象和-XML-互相转换" class="headerlink" title="POJO 对象和 XML 互相转换"></a>POJO 对象和 XML 互相转换</h2><p>POJO 对象 和 XML 的相互转换用到了 Java SE 6 之后自带的 JAXB。</p>
+<blockquote>
+<p>JAXB（Java Architecture for XML Binding简称JAXB）允许Java开发人员将Java类映射为XML表示方式。JAXB提供两种主要特性：将一个Java对象序列化为XML，以及反向操作，将XML解析成Java对象。换句话说，JAXB允许以XML格式存储和读取数据，而不需要程序的类结构实现特定的读取XML和保存XML的代码。</p>
+</blockquote>
+<h3 id="POJO-对象转换为-XML-文件"><a href="#POJO-对象转换为-XML-文件" class="headerlink" title="POJO 对象转换为 XML 文件"></a>POJO 对象转换为 XML 文件</h3><p>POJO 对象转换为 XML 文件需要借助注解来实现，注解的解释请见 <a href="https://www.cnblogs.com/fragranting/archive/2012/03/25/xml--jaxb.html" target="_blank" rel="noopener">JAXB 注解使用</a> 。</p>
+<p>首先定义一个 POJO 类：</p>
+<p><span id="Employee"><strong>Employee.java</strong></span></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.river.practice.msg_class;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> javax.xml.bind.annotation.XmlAccessType;</span><br><span class="line"><span class="keyword">import</span> javax.xml.bind.annotation.XmlAccessorType;</span><br><span class="line"><span class="keyword">import</span> javax.xml.bind.annotation.XmlElement;</span><br><span class="line"><span class="keyword">import</span> javax.xml.bind.annotation.XmlRootElement;</span><br><span class="line"><span class="keyword">import</span> javax.xml.bind.annotation.XmlType;</span><br><span class="line"></span><br><span class="line"><span class="meta">@XmlAccessorType</span>(XmlAccessType.FIELD)</span><br><span class="line"><span class="meta">@XmlType</span>(name = <span class="string">""</span>, propOrder = &#123;</span><br><span class="line">    <span class="string">"id"</span>,</span><br><span class="line">    <span class="string">"name"</span>,</span><br><span class="line">    <span class="string">"address"</span>,</span><br><span class="line">    <span class="string">"assestsAllocated"</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="meta">@XmlRootElement</span>(name = <span class="string">"employee"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Employee</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">byte</span> id;</span><br><span class="line">    <span class="meta">@XmlElement</span>(required = <span class="keyword">true</span>)</span><br><span class="line">    <span class="keyword">protected</span> String name;</span><br><span class="line">    <span class="meta">@XmlElement</span>(required = <span class="keyword">true</span>)</span><br><span class="line">    <span class="keyword">protected</span> Employee.Address address;</span><br><span class="line">    <span class="keyword">protected</span> List&lt;String&gt; assestsAllocated;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">byte</span> <span class="title">getId</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span><span class="params">(<span class="keyword">byte</span> value)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.id = value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String value)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Employee.<span class="function">Address <span class="title">getAddress</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> address;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAddress</span><span class="params">(Employee.Address value)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.address = value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">getAssestsAllocated</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (assestsAllocated == <span class="keyword">null</span>) &#123;</span><br><span class="line">            assestsAllocated = <span class="keyword">new</span> ArrayList&lt;String&gt;();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.assestsAllocated;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@XmlAccessorType</span>(XmlAccessType.FIELD)</span><br><span class="line">    <span class="meta">@XmlType</span>(name = <span class="string">""</span>, propOrder = &#123;</span><br><span class="line">        <span class="string">"addressLine1"</span>,</span><br><span class="line">        <span class="string">"addressLine2"</span>,</span><br><span class="line">        <span class="string">"country"</span>,</span><br><span class="line">        <span class="string">"state"</span>,</span><br><span class="line">        <span class="string">"zip"</span></span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Address</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@XmlElement</span>(required = <span class="keyword">true</span>)</span><br><span class="line">        <span class="keyword">protected</span> String addressLine1;</span><br><span class="line">        <span class="meta">@XmlElement</span>(required = <span class="keyword">true</span>)</span><br><span class="line">        <span class="keyword">protected</span> String addressLine2;</span><br><span class="line">        <span class="meta">@XmlElement</span>(required = <span class="keyword">true</span>)</span><br><span class="line">        <span class="keyword">protected</span> String country;</span><br><span class="line">        <span class="meta">@XmlElement</span>(required = <span class="keyword">true</span>)</span><br><span class="line">        <span class="keyword">protected</span> String state;</span><br><span class="line">        <span class="keyword">protected</span> <span class="keyword">short</span> zip;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">getAddressLine1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> addressLine1;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAddressLine1</span><span class="params">(String value)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.addressLine1 = value;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">getAddressLine2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> addressLine2;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAddressLine2</span><span class="params">(String value)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.addressLine2 = value;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">getCountry</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> country;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCountry</span><span class="params">(String value)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.country = value;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">getState</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> state;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setState</span><span class="params">(String value)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.state = value;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">short</span> <span class="title">getZip</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> zip;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setZip</span><span class="params">(<span class="keyword">short</span> value)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.zip = value;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>定义完 POJO 类以后，编写一个测试来将 POJO 对象转换为 XML 文件：</p>
+<p><strong>JAXBTest.java</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.river.practice;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"><span class="keyword">import</span> cn.river.practice.msg_class.Employee;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.xml.bind.JAXBContext;</span><br><span class="line"><span class="keyword">import</span> javax.xml.bind.Marshaller;</span><br><span class="line"><span class="keyword">import</span> javax.xml.bind.Unmarshaller;</span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.io.FileWriter;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JAXBTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 将java对象转换成xml，并用注解指定生成规则，是生成属性还是生成节点</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testMarshaller</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        <span class="comment">//获得转换的上下文对象</span></span><br><span class="line">        JAXBContext context = JAXBContext.newInstance(Employee.class);</span><br><span class="line">        <span class="comment">//获得Marshaller对象</span></span><br><span class="line">        Marshaller marshaller = context.createMarshaller();</span><br><span class="line">        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, <span class="keyword">true</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//填充对象</span></span><br><span class="line">        Employee employee = <span class="keyword">new</span> Employee();</span><br><span class="line">        Employee.Address address = <span class="keyword">new</span> Employee.Address();</span><br><span class="line">        employee.setId((<span class="keyword">byte</span>)<span class="number">1</span>);</span><br><span class="line">        employee.setName(<span class="string">"test"</span>);</span><br><span class="line">        address.setAddressLine1(<span class="string">"line1"</span>);</span><br><span class="line">        address.setAddressLine2(<span class="string">"line2"</span>);</span><br><span class="line">        address.setCountry(<span class="string">"cn"</span>);</span><br><span class="line">        address.setState(<span class="string">"nono"</span>);</span><br><span class="line">        address.setZip((<span class="keyword">short</span>)<span class="number">12122</span>);</span><br><span class="line">        employee.setAddress(address);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//写入文件并且打印到控制台</span></span><br><span class="line">        FileWriter writer=<span class="keyword">new</span> FileWriter(<span class="keyword">new</span> File(<span class="string">"employee.xml"</span>));</span><br><span class="line">        marshaller.marshal(employee, writer);</span><br><span class="line">        marshaller.marshal(employee, System.out);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行生成的 XML 文件如下：</p>
+<p><strong>employee.xml</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">employee</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">id</span>&gt;</span>1<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>test<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">address</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">addressLine1</span>&gt;</span>line1<span class="tag">&lt;/<span class="name">addressLine1</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">addressLine2</span>&gt;</span>line2<span class="tag">&lt;/<span class="name">addressLine2</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">country</span>&gt;</span>cn<span class="tag">&lt;/<span class="name">country</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">state</span>&gt;</span>nono<span class="tag">&lt;/<span class="name">state</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">zip</span>&gt;</span>12122<span class="tag">&lt;/<span class="name">zip</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">address</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">employee</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="XML-文件转换为-POJO-对象"><a href="#XML-文件转换为-POJO-对象" class="headerlink" title="XML 文件转换为 POJO 对象"></a>XML 文件转换为 POJO 对象</h3><p>编写一个测试来将刚才生成的 employee.xml 文件中的数据读取到相应的 POJO 类中：</p>
+<p><strong>JAXBTest.java</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JAXBTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 读取xml文档，并将xml文档反序列化为java对象</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testUnMarshaller</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        JAXBContext context = JAXBContext.newInstance(Employee.class);</span><br><span class="line">        Unmarshaller unmarshaller = context.createUnmarshaller();</span><br><span class="line">        File f=<span class="keyword">new</span> File(<span class="string">"employee.xml"</span>);</span><br><span class="line">        Employee employee = (Employee) unmarshaller.unmarshal(f);</span><br><span class="line">        System.out.println(<span class="string">"id: "</span> + employee.getId());</span><br><span class="line">        System.out.println(<span class="string">"name: "</span> + employee.getName());</span><br><span class="line">        System.out.println(<span class="string">"address_line1: "</span> + employee.getAddress().getAddressLine1());</span><br><span class="line">        System.out.println(<span class="string">"address_line2: "</span> + employee.getAddress().getAddressLine2());</span><br><span class="line">        System.out.println(<span class="string">"address_country: "</span> + employee.getAddress().getCountry());</span><br><span class="line">        System.out.println(<span class="string">"address_state: "</span> + employee.getAddress().getState());</span><br><span class="line">        System.out.println(<span class="string">"address_zip: "</span> + employee.getAddress().getZip());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行后的输出结果是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">id: 1</span><br><span class="line">name: test</span><br><span class="line">address_line1: line1</span><br><span class="line">address_line2: line2</span><br><span class="line">address_country: cn</span><br><span class="line">address_state: nono</span><br><span class="line">address_zip: 12122</span><br></pre></td></tr></table></figure>
+<h2 id="POJO-类-和-XSD-文件互相转换"><a href="#POJO-类-和-XSD-文件互相转换" class="headerlink" title="POJO 类 和 XSD 文件互相转换"></a>POJO 类 和 XSD 文件互相转换</h2><p>使用 JDK 自带的 xjc 和 schemagen 工具就可以在命令行中完成这项工作，这里我是在 IDEA 中用 JAXB2-maven-plugin 的方式来完成这个操作。</p>
+<p>具体的 maven-plugin 操作可以见 <a href="http://www.mojohaus.org/jaxb2-maven-plugin/Documentation/v2.2/" target="_blank" rel="noopener">官方文档</a> 。<br></p>
+<h3 id="POJO-类转换为-XSD-文件"><a href="#POJO-类转换为-XSD-文件" class="headerlink" title="POJO 类转换为 XSD 文件"></a>POJO 类转换为 XSD 文件</h3><p>我们对之前的 Employee POJO 类进行转换，具体定义见上。</p>
+<p>首先在 pom 文件中配置 maven-plugin：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.codehaus.mojo<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jaxb2-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">id</span>&gt;</span>schemagen<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">goal</span>&gt;</span>schemagen<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">sources</span>&gt;</span></span><br><span class="line">                    <span class="comment">&lt;!--这里的 source 可以指定一个目录，plugin 会自动递归地在目录中寻找 POJO 类来转换--&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">source</span>&gt;</span>target/generated-sources/jaxb/cn/river/practice/msg_class/Employee.java<span class="tag">&lt;/<span class="name">source</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">sources</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>configuration 标签中的 sources 标签用来指定需要转换的 POJO 类，其他更多有关参数参见 <a href="http://www.mojohaus.org/jaxb2-maven-plugin/Documentation/v2.2/schemagen-mojo.html" target="_blank" rel="noopener">schemagen 参数说明</a> 。</p>
+<p>配置完 pom 文件后，IDEA 会自动更新一下 maven-plugin 界面（如果不会请 reimport），然后在 IDEA 中点开在界面右边的 Maven Projects 窗口，再点开 Plugins，<span id="maven-plugin-window">如图所示</span>：</p>
+<p><img src="/2018/07/28/JAXB-简单使用/idea_maven_plugin_window.png" alt="IDEA maven-plugin 界面"></p>
+<p>这个时候如果设置好的 source 路径没有错误，直接双击 jaxb2:schemagen 就可以把指定的 POJO 类转换为 XSD 文件了。</p>
+<p>转换效果如下：</p>
+<figure class="highlight xsd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">xs:schema</span> <span class="attr">xmlns:xs</span>=<span class="string">"http://www.w3.org/2001/XMLSchema"</span> <span class="attr">version</span>=<span class="string">"1.0"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">xs:element</span> <span class="attr">name</span>=<span class="string">"employee"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">xs:complexType</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">xs:sequence</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">xs:element</span> <span class="attr">name</span>=<span class="string">"id"</span> <span class="attr">type</span>=<span class="string">"xs:byte"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">xs:element</span> <span class="attr">name</span>=<span class="string">"name"</span> <span class="attr">type</span>=<span class="string">"xs:string"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">xs:element</span> <span class="attr">name</span>=<span class="string">"address"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">xs:complexType</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">xs:sequence</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">xs:element</span> <span class="attr">name</span>=<span class="string">"addressLine1"</span> <span class="attr">type</span>=<span class="string">"xs:string"</span>/&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">xs:element</span> <span class="attr">name</span>=<span class="string">"addressLine2"</span> <span class="attr">type</span>=<span class="string">"xs:string"</span>/&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">xs:element</span> <span class="attr">name</span>=<span class="string">"country"</span> <span class="attr">type</span>=<span class="string">"xs:string"</span>/&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">xs:element</span> <span class="attr">name</span>=<span class="string">"state"</span> <span class="attr">type</span>=<span class="string">"xs:string"</span>/&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">xs:element</span> <span class="attr">name</span>=<span class="string">"zip"</span> <span class="attr">type</span>=<span class="string">"xs:short"</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">xs:sequence</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">xs:complexType</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">xs:element</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">xs:element</span> <span class="attr">maxOccurs</span>=<span class="string">"unbounded"</span> <span class="attr">minOccurs</span>=<span class="string">"0"</span> <span class="attr">name</span>=<span class="string">"assestsAllocated"</span> <span class="attr">nillable</span>=<span class="string">"true"</span> <span class="attr">type</span>=<span class="string">"xs:string"</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">xs:sequence</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">xs:complexType</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">xs:element</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">xs:schema</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="XSD-文件转换为-POJO-类"><a href="#XSD-文件转换为-POJO-类" class="headerlink" title="XSD 文件转换为 POJO 类"></a>XSD 文件转换为 POJO 类</h3><p>接下来我们把生成的 XSD 文件转换为 POJO 类，同样我们先配置 pom 文件中的 plugin：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.codehaus.mojo<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jaxb2-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">id</span>&gt;</span>xjc<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">goal</span>&gt;</span>xjc<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">sources</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--这里的 source 可以指定一个目录，plugin 会自动递归地在目录中寻找 XSD 文件来转换--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">source</span>&gt;</span>src/main/resources/xsd<span class="tag">&lt;/<span class="name">source</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">sources</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">packageName</span>&gt;</span>cn.river.practice.msg_class<span class="tag">&lt;/<span class="name">packageName</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>configuration 标签中的 sources 标签用来指定需要转换的 XSD 文件，packageName 标签用来指定生成的 POJO 类所在的包。其他更多有关参数参见 <a href="http://www.mojohaus.org/jaxb2-maven-plugin/Documentation/v2.2/xjc-mojo.html#schemaDirectory" target="_blank" rel="noopener">xjc 参数说明</a> 。</p>
+<p>之后的操作和 schemagen 差不多，在 IDEA 的 Maven Projects 中的 Plugins 更新后，直接双击 <a href="#maven-plugin-window">上图所示的</a> jaxb2:xjc 就可以生成 POJO 类了，生成的结果就是 <a href="#Employee">Employee.java</a> 文件。</p>
+<h2 id="IDEA-XML-文件中报错-“uri-is-not-registered”"><a href="#IDEA-XML-文件中报错-“uri-is-not-registered”" class="headerlink" title="IDEA XML 文件中报错 “uri is not registered”"></a>IDEA XML 文件中报错 “uri is not registered”</h2><p>解决这个问题最简单的方法是在相应的报错语句旁边点开 IDEA 小灯泡，然后选择 <strong>Fetch external resource</strong> 就可以了，如图：</p>
+<p><img src="/2018/07/28/JAXB-简单使用/idea_xml_uri_problem.png" alt="IDEA 解决 XML URI 问题"></p>
+<p>网络上有很多解决方案都是直接 <strong>Ignore external resource</strong> ，总觉得有点不大妥当。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/XML/" rel="tag"># XML</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/21/数据库设计-坑（0）/" rel="next" title="数据库设计--坑（0）">
+                <i class="fa fa-chevron-left"></i> 数据库设计--坑（0）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjA2MS8xMjU5Ng=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/iscream_normal.jpg"
+                alt="River Crown" />
+            
+              <p class="site-author-name" itemprop="name">River Crown</p>
+              <p class="site-description motion-element" itemprop="description">Chaos now</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#XML-文件头"><span class="nav-number">1.</span> <span class="nav-text">XML 文件头</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#POJO-对象和-XML-互相转换"><span class="nav-number">2.</span> <span class="nav-text">POJO 对象和 XML 互相转换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#POJO-对象转换为-XML-文件"><span class="nav-number">2.1.</span> <span class="nav-text">POJO 对象转换为 XML 文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XML-文件转换为-POJO-对象"><span class="nav-number">2.2.</span> <span class="nav-text">XML 文件转换为 POJO 对象</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#POJO-类-和-XSD-文件互相转换"><span class="nav-number">3.</span> <span class="nav-text">POJO 类 和 XSD 文件互相转换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#POJO-类转换为-XSD-文件"><span class="nav-number">3.1.</span> <span class="nav-text">POJO 类转换为 XSD 文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XSD-文件转换为-POJO-类"><span class="nav-number">3.2.</span> <span class="nav-text">XSD 文件转换为 POJO 类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IDEA-XML-文件中报错-“uri-is-not-registered”"><span class="nav-number">4.</span> <span class="nav-text">IDEA XML 文件中报错 “uri is not registered”</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">River Crown</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
