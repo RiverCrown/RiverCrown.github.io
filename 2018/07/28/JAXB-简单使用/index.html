@@ -137,13 +137,14 @@
 <meta property="og:site_name" content="Celeste">
 <meta property="og:description" content="要点：  POJO 对象和 XML 互相转换。  POJO 类和 XSD 互相转换。  主要介绍 JAXB 对简单 POJO 类（不含集合数组）的操作。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/07/28/JAXB-简单使用/JAXB2-maven-plugin_bug_config.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/07/28/JAXB-简单使用/idea_maven_plugin_window.png">
 <meta property="og:image" content="http://yoursite.com/2018/07/28/JAXB-简单使用/idea_xml_uri_problem.png">
-<meta property="og:updated_time" content="2018-07-29T02:28:52.410Z">
+<meta property="og:updated_time" content="2018-07-31T06:26:01.650Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAXB 简单使用">
 <meta name="twitter:description" content="要点：  POJO 对象和 XML 互相转换。  POJO 类和 XSD 互相转换。  主要介绍 JAXB 对简单 POJO 类（不含集合数组）的操作。">
-<meta name="twitter:image" content="http://yoursite.com/2018/07/28/JAXB-简单使用/idea_maven_plugin_window.png">
+<meta name="twitter:image" content="http://yoursite.com/2018/07/28/JAXB-简单使用/JAXB2-maven-plugin_bug_config.jpg">
 
 
 
@@ -408,7 +409,13 @@
 <p>运行后的输出结果是：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">id: 1</span><br><span class="line">name: test</span><br><span class="line">address_line1: line1</span><br><span class="line">address_line2: line2</span><br><span class="line">address_country: cn</span><br><span class="line">address_state: nono</span><br><span class="line">address_zip: 12122</span><br></pre></td></tr></table></figure>
 <h2 id="POJO-类-和-XSD-文件互相转换"><a href="#POJO-类-和-XSD-文件互相转换" class="headerlink" title="POJO 类 和 XSD 文件互相转换"></a>POJO 类 和 XSD 文件互相转换</h2><p>使用 JDK 自带的 xjc 和 schemagen 工具就可以在命令行中完成这项工作，这里我是在 IDEA 中用 JAXB2-maven-plugin 的方式来完成这个操作。</p>
-<p>具体的 maven-plugin 操作可以见 <a href="http://www.mojohaus.org/jaxb2-maven-plugin/Documentation/v2.2/" target="_blank" rel="noopener">官方文档</a> 。<br></p>
+<p>具体的 maven-plugin 操作可以见 <a href="http://www.mojohaus.org/jaxb2-maven-plugin/Documentation/v2.2/" target="_blank" rel="noopener">官方文档</a> 。</p>
+<p>PS：官网给的 <strong>“Multiple schemas with different configuration”</strong> 例子有 bug，即插件无法读取到 configuration 中的信息（我也不知道是 plugin 本身的问题还是 maven 更新后 maven 自身的问题）。官方示例截图：</p>
+<blockquote>
+<p><strong>Multiple schemas with different configuration</strong></p>
+</blockquote>
+<p><img src="/2018/07/28/JAXB-简单使用/JAXB2-maven-plugin_bug_config.jpg" alt="JAXB2-maven-plugin_bug_config"></p>
+<p>这是一个还未解决的问题（在我写博客时），想查看 bug 是否修复，可以移步 <a href="https://github.com/mojohaus/jaxb2-maven-plugin/issues/89" target="_blank" rel="noopener">github 中提出的关于这个问题的 issue</a> 。<br></p>
 <h3 id="POJO-类转换为-XSD-文件"><a href="#POJO-类转换为-XSD-文件" class="headerlink" title="POJO 类转换为 XSD 文件"></a>POJO 类转换为 XSD 文件</h3><p>我们对之前的 Employee POJO 类进行转换，具体定义见上。</p>
 <p>首先在 pom 文件中配置 maven-plugin：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.codehaus.mojo<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jaxb2-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">id</span>&gt;</span>schemagen<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">goal</span>&gt;</span>schemagen<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">sources</span>&gt;</span></span><br><span class="line">                    <span class="comment">&lt;!--这里的 source 可以指定一个目录，plugin 会自动递归地在目录中寻找 POJO 类来转换--&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">source</span>&gt;</span>target/generated-sources/jaxb/cn/river/practice/msg_class/Employee.java<span class="tag">&lt;/<span class="name">source</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">sources</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
@@ -466,6 +473,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/26/第一次实习总结/" rel="prev" title="第一次实习总结">
+                第一次实习总结 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -551,7 +562,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

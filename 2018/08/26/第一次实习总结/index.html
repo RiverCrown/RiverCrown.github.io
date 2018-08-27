@@ -118,7 +118,7 @@
 
 
 
-  <meta name="keywords" content="Web," />
+  <meta name="keywords" content="随笔," />
 
 
 
@@ -129,18 +129,18 @@
 
 
 
-<meta name="description" content="对于CGI的概念的整理总结。">
-<meta name="keywords" content="Web">
+<meta name="description" content="短短两个月的实习就要结束了，给这段时间做一个简短的总结。">
+<meta name="keywords" content="随笔">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CGI概念">
-<meta property="og:url" content="http://yoursite.com/2018/05/10/CGI概念/index.html">
+<meta property="og:title" content="第一次实习总结">
+<meta property="og:url" content="http://yoursite.com/2018/08/26/第一次实习总结/index.html">
 <meta property="og:site_name" content="Celeste">
-<meta property="og:description" content="对于CGI的概念的整理总结。">
+<meta property="og:description" content="短短两个月的实习就要结束了，给这段时间做一个简短的总结。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-06-21T14:50:15.443Z">
+<meta property="og:updated_time" content="2018-08-27T03:35:55.220Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CGI概念">
-<meta name="twitter:description" content="对于CGI的概念的整理总结。">
+<meta name="twitter:title" content="第一次实习总结">
+<meta name="twitter:description" content="短短两个月的实习就要结束了，给这段时间做一个简短的总结。">
 
 
 
@@ -170,13 +170,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/05/10/CGI概念/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/08/26/第一次实习总结/"/>
 
 
 
 
 
-  <title>CGI概念 | Celeste</title>
+  <title>第一次实习总结 | Celeste</title>
   
 
 
@@ -293,7 +293,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/10/CGI概念/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/26/第一次实习总结/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="River Crown">
@@ -310,7 +310,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">CGI概念</h1>
+          <h1 class="post-title" itemprop="name headline">第一次实习总结</h1>
         
 
         <div class="post-meta">
@@ -322,8 +322,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-10T16:55:31+08:00">
-                2018-05-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-26T18:00:15+08:00">
+                2018-08-26
               </time>
             
 
@@ -360,27 +360,69 @@
       
 
       
-        <center>对于CGI的概念的整理总结。</center>
-
+        <p>短短两个月的实习就要结束了，给这段时间做一个简短的总结。</p>
 <a id="more"></a>
-<h2 id="CGI概念"><a href="#CGI概念" class="headerlink" title="CGI概念"></a>CGI概念</h2><ul>
-<li><p>CGI实际上是一种接口规范（<strong>协议</strong>），按照此规范开发的程序均可称为CGI程序。  </p>
-</li>
-<li><p>通过CGI协议，web server可以将动态请求和相关参数发送给专门处理动态内容的应用程序。  </p>
-</li>
-<li><p>CGI是web server和web应用程序交流的规范。  </p>
-</li>
-<li><p>例如，在谷歌搜索栏中搜索一个关键词”http”，对应的URL为：<br><a href="https://www.google.com/search?q=http&amp;oq=http&amp;aqs=chrome..69i57j69i60l4j0.1136j0j8&amp;sourceid=chrome&amp;ie=UTF-8" target="_blank" rel="noopener">https://www.google.com/search?q=http&amp;oq=http&amp;aqs=chrome..69i57j69i60l4j0.1136j0j8&amp;sourceid=chrome&amp;ie=UTF-8</a>  </p>
+<h2 id="做了什么"><a href="#做了什么" class="headerlink" title="做了什么"></a>做了什么</h2><p>这次的实习因为时间较短，导师只好模拟了一个小的业务场景给我们练手。实现的是一个后端的中间件系统，用于在两个系统之间传递通讯信息并且记录下通讯的所有过程。</p>
+<h2 id="初始设计"><a href="#初始设计" class="headerlink" title="初始设计"></a>初始设计</h2><h3 id="数据库设计"><a href="#数据库设计" class="headerlink" title="数据库设计"></a>数据库设计</h3><p>一开始需要完成的任务是数据库设计，这一步的工作步骤大概是：</p>
+<ol>
+<li>研读数据库设计规范文档。</li>
+<li>研读业务文档，理清业务逻辑。</li>
+<li>设计 ER 图，生成数据库表。</li>
+</ol>
+<p>在读完了数据库设计规范文档以后可以明显感觉到 MySQL 在实现上的不足，因为 MySQL 的大部分高级功能都被禁用了。因为之前对于数据库的学习都只是达到了能用就行的程度，所以在设计数据库字段类型的时候总是会自以为是，比如认为 INT(11) 的意思是存储最多 11 位的 INT 值。虽然很多时候可以从表面去猜测一个类型的含义，但是对于不清楚的事物还是需要经过详实地查证，<strong>单纯的凭空猜想百害而无一益</strong>。</p>
+<p><strong>数据库设计和业务逻辑的关联性较大</strong>，所以最好是在透彻理解业务逻辑的情况下再设计数据库，否则就可能出现数据库设计一半的时候出现无法跑通业务逻辑的情况。（不过很多时候对业务逻辑的理解也是在数据库设计的过程中逐步加深的）</p>
+<p>其次 <strong>弄清所开发的系统边界和核心功能也很重要</strong>，否则在数据库设计的过程中也会绕很多弯，比如会额外考虑到很多不必要的情况或抓不到重点而设计出无法实现系统功能的数据库表。</p>
+<p>数据库的设计是一门很深的学问，为了设计出符合功能且性能优良的数据库不但需要知道数据库的原理和性能表现，更需要结合具体业务情况具体分析。<strong>单纯符合教科书上范式的数据库往往不是最合适的数据库</strong>。</p>
+<h3 id="接口设计"><a href="#接口设计" class="headerlink" title="接口设计"></a>接口设计</h3><p>由于牵扯到的业务场景较小，所以需要设计的接口比较少也比较简单，需要注意的是在约定接口的时候应 <strong>尽可能限制接口的功能（单一性）和适用性</strong>，避免调用接口的程序员滥用接口对后端服务造成难以预计的 bug，同时严格的接口设计也能免去许多校验工作。（强约束双方接口）</p>
+<p>这次尝试了一下用 dubbo 来实现接口间的调用，发现果然无论是什么框架，基础的使用都是很简单的，所以这次主要学习到的还是相关的技术理念。</p>
 <ul>
-<li><p>当谷歌的<strong>web server收到该请求后</strong>，先<strong>分析该url</strong>，从中知道了要执行search程序，并且还<strong>知道了一系列要传递给search的参数及其对应的value</strong>。</p>
-</li>
-<li><p>web server会将这些程序参数和其它一些环境变量<strong>根据cgi协议通过TCP或套接字等方式传递给已启动的cgi程序</strong>(可能是cgi进程，或者是已加载的模块cgi模块)。</p>
-</li>
-<li><p>当cgi进程接收到web server的请求后，调用search程序并执行，同时还会传递参数给search程序。search执行结束后，<strong>cgi进程/线程将处理结果返回给web server，web server再返回给浏览器</strong>。  </p>
-</li>
+<li><p>RPC</p>
+<ul>
+<li><a href="https://www.zhihu.com/question/41609070/answer/191965937" target="_blank" rel="noopener">有了 HTTP 请求，为什么还需要 RPC</a></li>
+<li><a href="https://www.cnblogs.com/winner-0715/p/5847638.html" target="_blank" rel="noopener">RPC技术概念理解</a></li>
 </ul>
 </li>
 </ul>
+<blockquote>
+<p>接口调用通常包含两个部分，序列化和通信协议。常见的序列化协议包括json、xml、hession、protobuf、thrift、text、bytes等；通信比较流行的是http、soap、websockect，RPC通常基于TCP实现，常用框架例如dubbo，netty、mina、thrift。</p>
+</blockquote>
+<h2 id="具体实现遇到的问题"><a href="#具体实现遇到的问题" class="headerlink" title="具体实现遇到的问题"></a>具体实现遇到的问题</h2><h3 id="XSD-生成-POJO-类"><a href="#XSD-生成-POJO-类" class="headerlink" title="XSD 生成 POJO 类"></a>XSD 生成 POJO 类</h3><p>需要实现的中间件系统要对 XML 报文进行处理，所以通过 XSD 生成 POJO 类就很重要。</p>
+<p>在做这个转换的时候采用了各种 maven 插件来处理，但是由于官方对于 maven 插件的支持没跟上，所以实际上使用起来的时候存在许多摸不着头脑的 bug，甚至按照官方手册编写的配置也会存在问题（技术落后，缺少维护）。最后是在导师的帮助下稍微改了一下配置文件就成功了。</p>
+<p>因此在遇到 bug 的时候应注意：</p>
+<ol>
+<li><strong>最先关注官网 github 中的 issue，避免无意义的搜索。</strong></li>
+<li><strong>老旧代码不可迷信官网。</strong></li>
+</ol>
+<h3 id="全局唯一序列号"><a href="#全局唯一序列号" class="headerlink" title="全局唯一序列号"></a>全局唯一序列号</h3><p>中间件需要生成全局唯一的序列号来确保报文的唯一性，考虑到分布式和高并发的问题，那么在生成序列号的时候就一定要用锁来控制并发。在网络上搜集到一些方法：</p>
+<ol>
+<li>简单的数据库主键自增 ID（如果数据库是分布式的就挂了）</li>
+<li>UUID（过长）</li>
+<li>Redis 实现（额外配置环境很麻烦）</li>
+<li>Twitter 的 SnowFlake 算法（原生算法生成的序列号过长）</li>
+</ol>
+<p>最后采用的是 SnowFlake 算法，该算法有高性能低延迟的特点，不过需要在应用上独立地进行部署和开发，且强依赖时间戳，在代码中需要处理好时间回滚造成的错误。</p>
+<p>虽然该算法原生生成的序列号超过业务需求，但是我们可以根据实际需求对算法进行修改。</p>
+<p>在搜集解决方案的时候需注意：</p>
+<ul>
+<li><strong>首先搜一下业内的大公司是如何解决问题的，这种搜索思路可以提供有保障的解决方案。</strong></li>
+</ul>
+<h2 id="业务逻辑的重要性"><a href="#业务逻辑的重要性" class="headerlink" title="业务逻辑的重要性"></a>业务逻辑的重要性</h2><p>这次模拟的业务场景虽然很小，但是因为前期对业务的理解一直不到位，因此经常在编码的时候发现设计有问题，导致数据库设计和接口设计一直在做修改。在这之前我还是比较轻视业务逻辑的，感觉一切都是技术为王，但经过这次模拟业务的开发，我才明白对业务逻辑的深刻理解能为应用的开发省去许多麻烦，同时也能少绕很多弯路。（起码能省去对设计进行反复修改的过程）</p>
+<p>果然软件工程中强调的理论有着很强的实际应用价值啊（比如清晰的需求分析，对系统边界的划分）。</p>
+<h2 id="不足的知识点-amp-错误的理解"><a href="#不足的知识点-amp-错误的理解" class="headerlink" title="不足的知识点 &amp; 错误的理解"></a>不足的知识点 &amp; 错误的理解</h2><p>这次实习我也发现了许多以往理解错误或者没有认真钻研过的知识点：</p>
+<ol>
+<li>Java 泛型的概念和使用</li>
+<li>TDD 方法的实际使用</li>
+<li>有关数据库的知识点（如事务，操作的原子性等等）</li>
+<li><p>同步异步概念的错误理解</p>
+<p> 同步和异步的概念其实相当易懂，但是之前在了解过概念后并没有进行过实践，所以一直处于一知半解的状态。简单来说同步会造成执行过程的阻塞，而异步就不会。</p>
+</li>
+<li><p>以前认为和编码相关的知识点并没有很大的难度，只要肯堆砌时间，总能达到一定的高度，这样的理解导致我的学习积极性始终无法高涨。但是后来发现计算机编码的知识体系实在是过于庞大，如果不愿意付出努力和时间去学习掌握各方面的“简单”知识点，那么在需要寻找解决方案的时候往往会舍近求远，有时甚至连个思路都没有。（比如在这次的实习中，因为不知道数据库 update 是原子性操作，在处理最后报文并发接收的时候绕了好大一个弯）</p>
+<p> 再仔细想想周边拿到优秀 offer 的大佬们，或许大家的学习能力都差不多，但是他们确确实实在编码上花费了比我更多的时间和精力，这么看来也是相当的公平。因此我也没什么好抱怨的，毕竟现在的处境都是由于自己的眼高手低和好高骛远而造成的。</p>
+</li>
+</ol>
+<blockquote>
+<p>她那时候还太年轻，不知道所有命运赠送的礼物，早已在暗中标好了价格。 —-茨威格 《断头皇后》</p>
+</blockquote>
 
       
     </div>
@@ -398,7 +440,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Web/" rel="tag"># Web</a>
+            <a href="/tags/随笔/" rel="tag"># 随笔</a>
           
         </div>
       
@@ -411,8 +453,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/05/02/16-3Sum-Closest/" rel="next" title="16. 3Sum Closest">
-                <i class="fa fa-chevron-left"></i> 16. 3Sum Closest
+              <a href="/2018/07/28/JAXB-简单使用/" rel="next" title="JAXB 简单使用">
+                <i class="fa fa-chevron-left"></i> JAXB 简单使用
               </a>
             
           </div>
@@ -420,10 +462,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/06/21/《Life-Is-Strange》感想/" rel="prev" title="《Life Is Strange》感想">
-                《Life Is Strange》感想 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -555,7 +593,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CGI概念"><span class="nav-number">1.</span> <span class="nav-text">CGI概念</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#做了什么"><span class="nav-number">1.</span> <span class="nav-text">做了什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始设计"><span class="nav-number">2.</span> <span class="nav-text">初始设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库设计"><span class="nav-number">2.1.</span> <span class="nav-text">数据库设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#接口设计"><span class="nav-number">2.2.</span> <span class="nav-text">接口设计</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#具体实现遇到的问题"><span class="nav-number">3.</span> <span class="nav-text">具体实现遇到的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#XSD-生成-POJO-类"><span class="nav-number">3.1.</span> <span class="nav-text">XSD 生成 POJO 类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#全局唯一序列号"><span class="nav-number">3.2.</span> <span class="nav-text">全局唯一序列号</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#业务逻辑的重要性"><span class="nav-number">4.</span> <span class="nav-text">业务逻辑的重要性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不足的知识点-amp-错误的理解"><span class="nav-number">5.</span> <span class="nav-text">不足的知识点 &amp; 错误的理解</span></a></li></ol></div>
             
 
           </div>
